@@ -20,7 +20,7 @@ func main() {
 		panic(err)
 	}
 
-	savePats("zzz.bin", m)
+	saveFile("file.bin", m)
 
 	var decodedMap map[string]int
 	d := gob.NewDecoder(b)
@@ -31,14 +31,14 @@ func main() {
 		panic(err)
 	}
 
-	loadeddMap := loadPats("zzz.bin")
+	loadeddMap := loadFile("file.bin")
 
 	// Ta da! It is a map!
 	fmt.Printf("%#v\n", decodedMap)
 	fmt.Printf("%#v\n", loadeddMap)
 }
 
-func savePats(file string, pats map[string]int) {
+func saveFile(file string, m map[string]int) {
 	f, err := os.Create(file)
 	if err != nil {
 		panic("cant open file")
@@ -46,12 +46,12 @@ func savePats(file string, pats map[string]int) {
 	defer f.Close()
 
 	enc := gob.NewEncoder(f)
-	if err := enc.Encode(pats); err != nil {
+	if err := enc.Encode(m); err != nil {
 		panic("cant encode")
 	}
 }
 
-func loadPats(file string) (pats map[string]int) {
+func loadFile(file string) (m map[string]int) {
 	f, err := os.Open(file)
 	if err != nil {
 		panic("cant open file")
@@ -59,8 +59,8 @@ func loadPats(file string) (pats map[string]int) {
 	defer f.Close()
 
 	enc := gob.NewDecoder(f)
-	if err := enc.Decode(&pats); err != nil {
+	if err := enc.Decode(&m); err != nil {
 		panic("cant decode")
 	}
-	return pats
+	return m
 }
