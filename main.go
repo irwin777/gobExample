@@ -20,7 +20,7 @@ func main() {
 		panic(err)
 	}
 
-	savePats("zzz", m)
+	savePats("zzz.bin", m)
 
 	var decodedMap map[string]int
 	d := gob.NewDecoder(b)
@@ -31,7 +31,7 @@ func main() {
 		panic(err)
 	}
 
-	loadeddMap := loadPats("zzz")
+	loadeddMap := loadPats("zzz.bin")
 
 	// Ta da! It is a map!
 	fmt.Printf("%#v\n", decodedMap)
